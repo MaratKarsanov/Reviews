@@ -25,11 +25,11 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetFeedbacksByProductId")]
-        public async Task<ActionResult<List<Feedback>>> GetAllReviewsAsync(int id)
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetAllReviewsAsync(int id)
         {
             try
             {
-                var result = await reviewService.GetFeedbacksByProductIdAsync(id);
+                var result = await reviewService.GetReviewsByProductIdAsync(id);
                 return Ok(result);
             }
             catch (Exception e)
@@ -44,7 +44,7 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetReview")]
-        public async Task<ActionResult<List<Feedback>>> GetReviewAsync(int feedbackId, int productId)
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewAsync(int feedbackId, int productId)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace ReviewsWebApplication.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpDelete("DeleteReview")]
-        public async Task<ActionResult<List<Feedback>>> DeleteReviewAsync(int id)
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> DeleteReviewAsync(int id)
         {
             try
             {
