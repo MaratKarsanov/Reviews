@@ -35,10 +35,6 @@
         /// </summary>
         public DateTime CreationDate { get; set; }
 
-        public int RatingId { get; set; }
-
-        public Rating Rating { get; set; }
-
         public Status Status { get; set; }
     }
 }
