@@ -8,22 +8,22 @@ namespace Review.Domain
     {
 
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<Models.Review> Feedbacks { get; set; }
+        public DbSet<Models.Review> Reviews { get; set; }
         public DbSet<Login> Logins { get; set; }
         public DataBaseContext(DbContextOptions<DataBaseContext> options): base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Review>()
-                .HasOne(p => p.Rating)
-                .WithMany(t => t.Reviews)
-                .HasForeignKey(p => p.RatingId)
+            modelBuilder.Entity<Models.Review>()
+                .HasOne(r => r.Rating)
+                .WithMany(r => r.Reviews)
+                .HasForeignKey(r => r.RatingId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Review>().HasData(Initialization.SetFeedbacks());
+            modelBuilder.Entity<Models.Review>().HasData(Initialization.SetReviews());
             modelBuilder.Entity<Rating>().HasData(Initialization.SetRatings());
             modelBuilder.Entity<Login>().HasData(Initialization.SetLogin());
         }

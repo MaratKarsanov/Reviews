@@ -20,7 +20,7 @@ namespace ReviewsWebApplication.Controllers
             this.loginService = loginService;
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public IActionResult Login([FromBody] Login login)
         {
             if (login is null)

@@ -17,7 +17,7 @@ namespace Review.Domain.Services
         /// <param name="id">Id отзыва</param>
         /// <param name="productId">Id продукта</param>
         /// <returns></returns>
-        Task<IEnumerable<Models.Review?>> GetReviewAsync(int id, int productId);
+        Task<IEnumerable<Models.Review?>> GetReviewsAsync(int id);
 
         /// <summary>
         /// Удаление отзыва

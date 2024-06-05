@@ -24,12 +24,12 @@ namespace ReviewsWebApplication.Controllers
         /// Получение всех отзывов по продукту
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetFeedbacksByProductId")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetAllReviewsAsync(int id)
+        [HttpGet("GetReviewsByProductId")]
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewsByProductIdAsync(int productId)
         {
             try
             {
-                var result = await reviewService.GetReviewsByProductIdAsync(id);
+                var result = await reviewService.GetReviewsByProductIdAsync(productId);
                 return Ok(result);
             }
             catch (Exception e)
@@ -44,11 +44,11 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetReview")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewAsync(int feedbackId, int productId)
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewAsync(int reviewId)
         {
             try
             {
-                var result = await reviewService.GetReviewAsync(feedbackId, productId);
+                var result = await reviewService.GetReviewsAsync(reviewId);
                 return Ok(result);
             }
             catch (Exception e)
@@ -64,12 +64,12 @@ namespace ReviewsWebApplication.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpDelete("DeleteReview")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> DeleteReviewAsync(int id)
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> DeleteReviewAsync(int reviewId)
         {
             try
             {
-                var result = await reviewService.TryToDeleteReviewAsync(id);
-                if(result)
+                var result = await reviewService.TryToDeleteReviewAsync(reviewId);
+                if (result)
                     return Ok();
                 return BadRequest(result);
             }
