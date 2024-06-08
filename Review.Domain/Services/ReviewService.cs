@@ -13,13 +13,15 @@ namespace Review.Domain.Services
         public async Task<List<Models.Review>> GetReviewsByProductIdAsync(int productId)
         {
             return await databaseContext.Reviews
-                .Where(r => r.ProductId == productId)
+                .Where(r => r.ProductId == productId && r.Status != Models.Status.Deleted)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Models.Review?>> GetReviewsAsync(int id)
         {
-            return await databaseContext.Reviews.Where(x => x.Id == id).ToListAsync();
+            return await databaseContext.Reviews
+                .Where(r => r.Id == id && r.Status != Models.Status.Deleted)
+                .ToListAsync();
         }
 
         public async Task<bool> TryToDeleteReviewAsync(int reviewId)
