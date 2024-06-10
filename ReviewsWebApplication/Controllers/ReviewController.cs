@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Review.Domain.Models;
 using Review.Domain.Services;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ReviewsWebApplication.Controllers
 {
@@ -10,7 +14,6 @@ namespace ReviewsWebApplication.Controllers
 
     public class ReviewController : ControllerBase
     {
-
         private readonly ILogger<ReviewController> _logger;
         private readonly IReviewService reviewService;
 
@@ -18,6 +21,25 @@ namespace ReviewsWebApplication.Controllers
         {
             _logger = logger;
             this.reviewService = reviewService;
+        }
+
+        /// <summary>
+        /// Добавление отзыва
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("AddReview")]
+        public async Task<IActionResult> AddReview([FromBody] AddReview addReview)
+        {
+            try
+            {
+                var result = await reviewService.TryToAddReviewAsync(addReview);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, e);
+                return BadRequest(new { Error = e.Message });
+            }
         }
 
         /// <summary>

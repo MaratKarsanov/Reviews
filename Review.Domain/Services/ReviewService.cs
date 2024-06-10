@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Review.Domain.Models;
 
 namespace Review.Domain.Services
 {
@@ -10,6 +11,25 @@ namespace Review.Domain.Services
         {
             this.databaseContext = databaseContext;
         }
+
+        public async Task<Models.Review> TryToAddReviewAsync(AddReview addReview)
+        {
+            if (addReview.Grade < 0 || addReview.Grade > 5)
+                return null;
+            var review = new Models.Review()
+            {
+                ProductId = addReview.ProductId,
+                Text = addReview.Text,
+                Grade = addReview.Grade,
+                CreationDate = DateTime.UtcNow,
+                Status = Status.Actual,
+                UserId = addReview.UserId
+            };
+            await databaseContext.Reviews.AddAsync(review!);
+            await databaseContext.SaveChangesAsync();
+            return review;
+        }
+
         public async Task<List<Models.Review>> GetReviewsByProductIdAsync(int productId)
         {
             return await databaseContext.Reviews
@@ -31,7 +51,7 @@ namespace Review.Domain.Services
                 var review = await databaseContext.Reviews
                     .Where(r => r.Id == reviewId)
                     .FirstOrDefaultAsync();
-                review.Status = Models.Status.Deleted;
+                review.Status = Status.Deleted;
                 await databaseContext.SaveChangesAsync();
                 return true;
             }

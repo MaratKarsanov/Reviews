@@ -25,5 +25,12 @@ namespace Review.Domain.Services
         /// <param name="id">Id отзыва</param>
         /// <returns></returns>
         Task<bool> TryToDeleteReviewAsync(int id);
+
+        /// <summary>
+        /// Получение отзыва
+        /// </summary>
+        /// <param name="addReview">Новый отзыв</param>
+        /// <returns></returns>
+        Task<Models.Review> TryToAddReviewAsync(AddReview addReview);
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using Review.Domain;
 using Review.Domain.Services;
 using System.Text;
+using System.Text.Json.Serialization;
 using ConfigurationManager = Review.Domain.Services.ConfigurationManager;
 
 internal class Program
@@ -50,6 +51,8 @@ internal class Program
         builder.Services.AddScoped<IReviewService, ReviewService>();
         builder.Services.AddScoped<ICacheService, CacheService>();
         builder.Services.AddScoped<LoginService>();
+        builder.Services.AddControllers()
+        .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         builder.Services.AddAuthentication(opt => {
             opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

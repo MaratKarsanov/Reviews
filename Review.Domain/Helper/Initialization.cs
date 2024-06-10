@@ -26,35 +26,8 @@ namespace Review.Domain.Helper
                 ProductId = random.Next(1, 10),
                 Text = loremIpsum.Substring(0, random.Next(20, 100)),
                 UserId = random.Next(1, 10), 
-                RatingId = random.Next(1, 10),
                 Status = (Status)random.Next(0, 2)
             };
-        }
-
-        public static List<Rating> SetRatings()
-        {
-            var ratings = new List<Rating>();
-            for (var i = 0; i < count; i++)
-                ratings.Add(CreateRating(i + 1));
-            return ratings;
-        }
-
-        public static Rating CreateRating(int id)
-        {
-            var review = CreateReview(id);
-            var reviewsCount = random.Next(1, 10);
-            var reviews = new List<Models.Review>(reviewsCount);
-            for (int i = 0; i < reviewsCount; i++)
-                reviews.Add(CreateReview(i + 1));
-            var reviewsAverage = reviews.Select(x => x.Grade).Average();
-            var rating = new Rating()
-            {
-                Id = id,
-                CreationDate = DateTime.Now.AddDays(random.Next(-100, 0)),
-                ProductId = random.Next(1, 10),
-                Grade = Math.Round(reviewsAverage, 2)
-            };
-            return rating;
         }
 
         public static Login SetLogin()
