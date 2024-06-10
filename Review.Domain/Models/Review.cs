@@ -3,7 +3,7 @@
     /// <summary>
     /// Отзыв
     /// </summary>
-    public class Feedback
+    public class Review
     {
         /// <summary>
         /// Id отзыва
@@ -33,19 +33,8 @@
         /// <summary>
         /// Дата создания
         /// </summary>
-        public DateTime CreateDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public int RatingId { get; set; }
-
-        public Rating Rating { get; set; }
-
-        public Status status { get; set; }
+        public Status Status { get; set; }
     }
-}
-public enum Status
-{
-
-    None = 0,
-    Actual = 1,
-    Deleted = 2
 }

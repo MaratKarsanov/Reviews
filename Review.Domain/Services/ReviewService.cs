@@ -1,5 +1,5 @@
-﻿using Review.Domain.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Review.Domain.Models;
 
 namespace Review.Domain.Services
 {
@@ -11,22 +11,47 @@ namespace Review.Domain.Services
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<List<Feedback>> GetFeedbacksByProductIdAsync(int id)
+
+        public async Task<Models.Review> TryToAddReviewAsync(AddReview addReview)
         {
-            return await databaseContext.Feedbacks.ToListAsync();
+            if (addReview.Grade < 0 || addReview.Grade > 5)
+                return null;
+            var review = new Models.Review()
+            {
+                ProductId = addReview.ProductId,
+                Text = addReview.Text,
+                Grade = addReview.Grade,
+                CreationDate = DateTime.UtcNow,
+                Status = Status.Actual,
+                UserId = addReview.UserId
+            };
+            await databaseContext.Reviews.AddAsync(review!);
+            await databaseContext.SaveChangesAsync();
+            return review;
         }
 
-        public async Task<IEnumerable<Feedback?>> GetReviewAsync(int id, int productId)
+        public async Task<List<Models.Review>> GetReviewsByProductIdAsync(int productId)
         {
-            return await databaseContext.Feedbacks.Where(x => x.Id == id).ToListAsync();
+            return await databaseContext.Reviews
+                .Where(r => r.ProductId == productId && r.Status != Models.Status.Deleted)
+                .ToListAsync();
         }
 
-        public async Task<bool> TryToDeleteReviewAsync(int id)
+        public async Task<IEnumerable<Models.Review?>> GetReviewsAsync(int id)
+        {
+            return await databaseContext.Reviews
+                .Where(r => r.Id == id && r.Status != Models.Status.Deleted)
+                .ToListAsync();
+        }
+
+        public async Task<bool> TryToDeleteReviewAsync(int reviewId)
         {
             try
             {
-                var Review = await databaseContext.Feedbacks.Where(x => x.Id == id).FirstOrDefaultAsync();
-                databaseContext.Feedbacks.Remove(Review!);
+                var review = await databaseContext.Reviews
+                    .Where(r => r.Id == reviewId)
+                    .FirstOrDefaultAsync();
+                review.Status = Status.Deleted;
                 await databaseContext.SaveChangesAsync();
                 return true;
             }

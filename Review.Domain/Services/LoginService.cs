@@ -1,5 +1,4 @@
 ﻿using Review.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Review.Domain.Services
 {
@@ -13,14 +12,10 @@ namespace Review.Domain.Services
         }
         public bool CheckLogin(Login login)
         {
-            var containsLogin = databaseContext.Logins;
-            foreach (var item in containsLogin)
+            foreach (var item in databaseContext.Logins)
             {
-                if(item.UserName.Equals(login.UserName) && item.Password.Equals(login.Password))
-                {
+                if (item.UserName == login.UserName && item.Password == login.Password)
                     return true;
-                    break;
-                }
             }
             return false;
         }
