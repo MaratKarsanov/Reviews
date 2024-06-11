@@ -12,20 +12,20 @@ namespace Review.Domain.Helper
         {
             var reviews = new List<Models.Review>();
             for (var i = 0; i < count; i++)
-                reviews.Add(CreateReview(i + 1));
+                reviews.Add(CreateReview(Guid.NewGuid()));
             return reviews;
         }
 
-        public static Models.Review CreateReview(int id)
+        public static Models.Review CreateReview(Guid id)
         {
             return new Models.Review()
             {
                 Id = id,
                 CreationDate = DateTime.Now.AddDays(random.Next(-100, 0)),
                 Grade = random.Next(0, 6),
-                ProductId = random.Next(1, 10),
+                ProductId = Guid.NewGuid(),
                 Text = loremIpsum.Substring(0, random.Next(20, 100)),
-                UserId = random.Next(1, 10), 
+                UserId = Guid.NewGuid(), 
                 Status = (Status)random.Next(0, 2)
             };
         }

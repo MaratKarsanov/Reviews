@@ -7,7 +7,6 @@ namespace ReviewsWebApplication.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
     public class ReviewController : ControllerBase
     {
         private readonly ILogger<ReviewController> _logger;
@@ -43,7 +42,7 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetReviewsByProductId")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewsByProductIdAsync(int productId)
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewsByProductIdAsync(Guid productId)
         {
             try
             {
@@ -62,7 +61,7 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetReview")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewAsync(int reviewId)
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewAsync(Guid reviewId)
         {
             try
             {
@@ -82,7 +81,7 @@ namespace ReviewsWebApplication.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpDelete("DeleteReview")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> DeleteReviewAsync(int reviewId)
+        public async Task<ActionResult<List<Review.Domain.Models.Review>>> DeleteReviewAsync(Guid reviewId)
         {
             try
             {

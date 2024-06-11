@@ -9,7 +9,7 @@ namespace Review.Domain.Services
         /// </summary>
         /// <param name="id">Id продукта</param>
         /// <returns></returns>
-        Task<List<Models.Review>> GetReviewsByProductIdAsync(int id);
+        Task<List<Models.Review>> GetReviewsByProductIdAsync(Guid id);
 
         /// <summary>
         /// Получение все отзывов по продукту
@@ -17,14 +17,14 @@ namespace Review.Domain.Services
         /// <param name="id">Id отзыва</param>
         /// <param name="productId">Id продукта</param>
         /// <returns></returns>
-        Task<IEnumerable<Models.Review?>> GetReviewsAsync(int id);
+        Task<IEnumerable<Models.Review?>> GetReviewsAsync(Guid id);
 
         /// <summary>
         /// Удаление отзыва
         /// </summary>
         /// <param name="id">Id отзыва</param>
         /// <returns></returns>
-        Task<bool> TryToDeleteReviewAsync(int id);
+        Task<bool> TryToDeleteReviewAsync(Guid id);
 
         /// <summary>
         /// Получение отзыва

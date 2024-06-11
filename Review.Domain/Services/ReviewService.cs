@@ -30,21 +30,21 @@ namespace Review.Domain.Services
             return review;
         }
 
-        public async Task<List<Models.Review>> GetReviewsByProductIdAsync(int productId)
+        public async Task<List<Models.Review>> GetReviewsByProductIdAsync(Guid productId)
         {
             return await databaseContext.Reviews
                 .Where(r => r.ProductId == productId && r.Status != Models.Status.Deleted)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Models.Review?>> GetReviewsAsync(int id)
+        public async Task<IEnumerable<Models.Review?>> GetReviewsAsync(Guid id)
         {
             return await databaseContext.Reviews
                 .Where(r => r.Id == id && r.Status != Models.Status.Deleted)
                 .ToListAsync();
         }
 
-        public async Task<bool> TryToDeleteReviewAsync(int reviewId)
+        public async Task<bool> TryToDeleteReviewAsync(Guid reviewId)
         {
             try
             {
