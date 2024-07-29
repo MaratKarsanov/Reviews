@@ -40,7 +40,7 @@ namespace Review.Domain.Services
         public async Task<IEnumerable<Models.Review?>> GetReviewsAsync(Guid id)
         {
             return await databaseContext.Reviews
-                .Where(r => r.Id == id && r.Status != Models.Status.Deleted)
+                .Where(r => r.Id == id && r.Status != Status.Deleted)
                 .ToListAsync();
         }
 

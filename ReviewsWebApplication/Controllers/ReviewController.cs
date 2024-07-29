@@ -61,11 +61,11 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetReview")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewAsync(Guid reviewId)
+        public async Task<ActionResult<Review.Domain.Models.Review>> GetReviewAsync(Guid reviewId)
         {
             try
             {
-                var result = await reviewService.GetReviewsAsync(reviewId);
+                var result = (await reviewService.GetReviewsAsync(reviewId)).First();
                 return Ok(result);
             }
             catch (Exception e)
@@ -79,7 +79,7 @@ namespace ReviewsWebApplication.Controllers
         /// Удаление отзыва по id
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         [HttpDelete("DeleteReview")]
         public async Task<ActionResult<List<Review.Domain.Models.Review>>> DeleteReviewAsync(Guid reviewId)
         {

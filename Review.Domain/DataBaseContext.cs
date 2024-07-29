@@ -10,7 +10,7 @@ namespace Review.Domain
         public DbSet<Login> Logins { get; set; }
         public DataBaseContext(DbContextOptions<DataBaseContext> options): base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
