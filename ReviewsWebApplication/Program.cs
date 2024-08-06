@@ -70,13 +70,13 @@ internal class Program
         });
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
-        {
+        //if (app.Environment.IsDevelopment())
+        //{
             app.UseSwagger();
             app.UseSwaggerUI(options => {
                 options.SwaggerEndpoint("/swagger/V1/swagger.json", "Secret_WebAPI");
             });
-        }
+        //}
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();

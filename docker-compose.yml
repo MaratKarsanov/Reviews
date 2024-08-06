@@ -1,0 +1,29 @@
+version: '3.4'
+networks:
+  reviewsapp:
+    driver: bridge
+services:
+  mssqlserver:
+    container_name: reviews_db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment: 
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1Secure*Password1
+    ports:
+      - 1433:1433
+    networks:
+      - reviewsapp
+    
+  reviews_api:
+    container_name: reviews_api
+    image: ${DOCKER_REGISTRY-}reviewswebapplication
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5005:80
+    depends_on:
+      - mssqlserver   
+    restart: unless-stopped 
+    networks:
+      - reviewsapp
