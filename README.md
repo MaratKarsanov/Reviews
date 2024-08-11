@@ -30,8 +30,8 @@
 <li>Клонируйте репозиторий:</li>
 
 
-<code>git clone https://github.com/PavelKozaev/review_service.git
-cd review_service</code>
+<code>git clone https://github.com/MaratKarsanov/Reviews.git
+cd Reviews</code>
   
 <li>Настройте строки подключения к базе данных MSSQL в файле конфигурации appsettings.json.</li>
 
